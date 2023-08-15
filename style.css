@@ -1,0 +1,196 @@
+/*Setting up some which will make styling our 
+heights and widths so much easier*/
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root{
+    /*Declaring Cell size variables*/
+    --cell-size: 100px;
+    /*defining the size for X or O in tic tac toe game*/
+    --mark-size: calc(var(--cell-size) * .9);
+}
+
+body{
+    margin: 0%;
+    background-color: #EAC696;
+}
+
+.board{
+    /*The following width and height will fill the borders of our screen
+    which will help us to design our content at the center of our screen
+    eventually.*/
+    width: 100vw;
+    height: 100vh;
+    /*To put content at the center of our screen*/
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    /*Aligning each individual  items to the center as well*/
+    justify-items: center;
+    align-items: center;
+    /*This will repeat the columns three times to shape it like tic tac toe board*/
+    grid-template-columns: repeat(3, auto);
+
+}
+
+.cell{
+    width: var(--cell-size);
+    height: var(--cell-size);
+    /*background-color: black;*/
+    /*Creating borders for each cell in between the black box or container*/
+    border: 2px solid black;
+    /*Displaying the items inside each cell*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /*Giving the pointer cursor when user hover over the empty cell
+    without X or O content*/
+    cursor: pointer;
+}
+
+/*Getting rid of the top borders around the edges of the tic tac toe board*/
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+/*Getting rid of the borders from left side of the tic tac toe board*/
+.cell:nth-child(3n + 1){
+    border-left: none;
+}
+
+/*Getting rid of the borders from right side of the tic tac toe board*/
+.cell:nth-child(3n + 3){
+    border-right: none;
+}
+
+/*Getting rid of the bottom borders around the edges of the tic tac toe board*/
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+/*Not allowed cursor will appear or will be applicable when there will be
+X or O item inside teh cell of that board*/
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after{
+    background-color: #DC0000; 
+}
+
+.cell.circle::before{
+    /*First circles background colour will be blue*/
+    background-color: #1A5D1A; 
+}
+
+/*Creating the hover effect when the player needs to put a X mark on the 
+empty cell of the board. The colour will show as light gray.*/
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before{
+background-color: lightgray;
+}
+
+/*Designing the X elements in tic tac toe game*/
+.cell.x::before,
+.cell.x::after,
+/*Creating the hover effect when the player needs to put a X mark on the 
+empty cell of the board*/ 
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    content: "";
+    position: absolute;
+    /*We want the width to be about 15% of the height of our X*/
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);  
+}
+
+/*Rotating the marksize to 45 degree angle*/
+.cell.x::before,
+/*Creating the hover effect when the player needs to put a X mark on the 
+empty cell of the board*/
+.board.x .cell:not(.x):not(.circle):hover::before{
+    transform: rotate(45deg);
+}
+
+/*Rotating the marksize to 45 degree angle*/
+.cell.x::after,
+/*Creating the hover effect when the player needs to put a X mark on the 
+empty cell of the board*/
+.board.x .cell:not(.x):not(.circle):hover::after{
+    transform: rotate(-45deg);
+}
+
+
+
+/*Designing the O elements in tic tac toe game*/
+.cell.circle::before,
+.cell.circle::after,
+/*Creating the hover effect when the player needs to put a X mark on the 
+empty cell of the board*/
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+}
+
+/*Creating a larger circle where the width and height is same as the var*/
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before{
+        /*We want the width and height of our O to be same as the var --mark-size*/
+        width: var(--mark-size);
+        height: var(--mark-size);        
+}
+
+/*Creating a second smaller circle*/
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after{
+    /*Creating the width and height smaller than first circle*/
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    /*Second circles background colour will be white*/
+    background-color: white;
+}
+
+.winning-message{
+    display: none;
+    position: fixed;
+    top: 0%;
+    bottom: 0%;
+    right: 0%;
+    left: 0%;
+    background-color: rgb(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    font-size: 10rem;
+    flex-direction: column;
+}
+
+.winning-message button{
+    font-size: 5rem;
+    background-color: bisque;
+    border: 3px solid brown;
+    padding: .25rem .5rem;
+    cursor: pointer;
+}
+
+.winning-message button:hover {
+    background-color: brown;
+    border: 3px solid black;
+    color: black;
+
+}
+
+.winning-message.show{
+    display: flex;
+}
